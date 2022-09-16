@@ -13,6 +13,12 @@
         <div class="p-6 bg-white border-b border-gray-200">
           <div class="mb-6">
             <div class="flex flex-col mb-4">
+              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">User</p>
+              <p class="py-2 px-3 text-grey-darkest" id="user_id">
+                {{$tweet->user->name}}
+              </p>
+            </div>
+            <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Tweet</p>
               <p class="py-2 px-3 text-grey-darkest" id="tweet">
                 {{$tweet->tweet}}
