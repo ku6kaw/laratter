@@ -162,8 +162,33 @@ class TweetController extends Controller
             ->userTweets()
             ->orderBy('created_at','desc')
             ->get();
-        return view('tweet.index', compact('tweets'));
+        //ddd($tweets);
+        return view('tweet.myindex', compact('tweets'));
+
     }
+
+    // public function iconUp(Request $request)
+    // {
+    //     //ddd($request);
+    //     $dir = 'icon';
+
+    //     $data = $request->merge(['user_id' => Auth::user()->id])->all();
+    //     $icon = $request->file('icon');
+    //     //$result = User::create($data);
+
+    //     $path = \Storage::put('/public', $icon);
+
+    //     // アップロードされたファイル名を取得
+    //     $file_name = $request->file('icon')->getClientOriginalName();
+
+    //     $users = new User();
+    //     $users->icon = 'storage/' . $dir . '/' . $file_name;
+    //     $users->save();
+
+        
+
+    //     return redirect()->route('tweet.myindex');
+    // }
 
     public function timeline()
     {

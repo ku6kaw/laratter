@@ -19,6 +19,7 @@ use App\Http\Controllers\SearchController;
 
 //{}の中身がログイン必須になる
 Route::group(['middleware' => 'auth'], function () {  
+  Route::post('tweet/mypage', [TweetController::class, 'iconUp'])->name('tweet.iconUp');
   Route::get('/tweet/search/input', [SearchController::class, 'create'])->name('search.input');
   Route::get('/tweet/search/result', [SearchController::class, 'index'])->name('search.result');
   Route::get('/tweet/timeline', [TweetController::class, 'timeline'])->name('tweet.timeline');
