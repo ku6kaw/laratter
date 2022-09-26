@@ -42,25 +42,53 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-    // バリデーション
-    $validator = Validator::make($request->all(), [
-        'tweet' => 'required | max:191',
-        'description' => 'required',
-    ]);
-    // バリデーション:エラー
-    if ($validator->fails()) {
-        return redirect()
-        ->route('tweet.create')
-        ->withInput()
-        ->withErrors($validator);
-    }
-    // create()は最初から用意されている関数
-    // 戻り値は挿入されたレコードの情報
-    //フォームから送信されてきたデータとユーザIDをマージし，DBにinsertする
-    $data = $request->merge(['user_id' => Auth::user()->id])->all();
-    $result = Tweet::create($data);
-    // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
-    return redirect()->route('tweet.index');
+        // バリデーション
+        $validator = Validator::make($request->all(), [
+            'tweet' => 'required | max:191',
+            'description' => 'required',
+        ]);
+        // バリデーション:エラー
+        if ($validator->fails()) {
+            return redirect()
+            ->route('tweet.create')
+            ->withInput()
+            ->withErrors($validator);
+        }
+        // create()は最初から用意されている関数
+        // 戻り値は挿入されたレコードの情報
+        //フォームから送信されてきたデータとユーザIDをマージし，DBにinsertする
+        $data = $request->merge(['user_id' => Auth::user()->id])->all();
+        //ddd($data);
+        $image = $request->file('image');
+        //ddd($image);
+        $result = Tweet::create($data);
+        //ddd($result);
+
+        if($request->hasFile('image')){ //画像がアップロードされたか確認
+            $path = \Storage::put('/public', $image); //storage/app/publicに画像を保存
+            // $path = explode('/', $path); //画像のパスからpublicを除去
+        }else{
+            $path = null;
+        }
+        //ddd($path);
+        $dir = 'image';
+        
+        // アップロードされたファイル名を取得
+        $file_name = $request->file('image')->getClientOriginalName();
+
+        // 取得したファイル名で保存
+        $request->file('image')->storeAs('public/' . $dir, $file_name);
+
+        $tweet = new Tweet();
+        $tweet->user_id = $data['user_id'];
+        $tweet->tweet = $data['tweet'];
+        $tweet->description = $data['description'];
+        $tweet->image = 'storage/' . $dir . '/' . $file_name;
+        $tweet->save();
+
+
+        // ルーティング「todo.index」にリクエスト送信（一覧ページに移動）
+        return redirect()->route('tweet.index');
     }
 
 
