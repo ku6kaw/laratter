@@ -24,6 +24,16 @@
                 {{$tweet->tweet}}
               </p>
             </div>
+
+            <!-- image -->
+            <div class="flex flex-col mb-4">
+              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Tweet</p>
+              <p class="py-2 px-3 text-grey-darkest" id="tweet">
+                <img src="{{ asset($tweet->image) }}" class='w-100 mb-3'/>
+              </p>
+            </div>
+            <!-- imageここまで -->
+
             <div class="flex flex-col mb-4">
               <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Description</p>
               <p class="py-2 px-3 text-grey-darkest" id="description">

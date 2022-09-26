@@ -23,11 +23,11 @@
                 <td class="py-4 px-6 border-b border-grey-light">
                   <div class="flex">
 
-                    <!-- 🔽 編集 -->
+                    <!-- user_name -->
                     <a href="{{ route('follow.show', $tweet->user->id) }}">
                       <p class="text-left text-grey-dark">{{$tweet->user->name}}</p>
                     </a>
-                    <!-- 🔼 ここまで -->
+                    <!--  ここまで -->
 
                     <!-- follow 状態で条件分岐 -->
                     @if(Auth::user()->followings()->where('users.id', $tweet->user->id)->exists())
@@ -55,9 +55,17 @@
                     @endif
                   </div>
 
+                  <!-- tweet -->
                   <a href="{{ route('tweet.show',$tweet->id) }}">
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$tweet->tweet}}</h3>
                   </a>
+                  <!-- tweetここまで -->
+
+                  <!-- image -->
+                  <!-- <img src="{{ '/storage/' . $tweet['image']}}" class='w-100 mb-3'/> -->
+                  <img src="{{ asset($tweet->image) }}" class='w-100 mb-3'/>
+                  <!-- imageここまで -->
+
 
                   <div class="flex">
                     <!-- favorite 状態で条件分岐 -->
